@@ -8,9 +8,9 @@ public class Main {
         DrawDeck mainDeck = new DrawDeck();
 
         mainDeck.createDeck();
-        mainDeck.firstDeal();
+        mainDeck.shuffle();
 
-        mainDeck.print();
+
 
     }
 }
