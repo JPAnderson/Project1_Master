@@ -1,22 +1,21 @@
 package com.company;
 
-/*
-* This class also inherits from Deck.
-* it is the deck that players discard to
-* and also has a few methods of its own
-*/
 
-//TODO: Collect all(?)
-/* ^ don't do until you have more information */
+import java.util.Stack;
 
+public class DiscardDeck {
+    protected Stack<PlayingCard> discardDeck = new Stack<>();
 
-public class DiscardDeck extends Deck {
+    public void getCard(PlayingCard y){
+        discardDeck.push(y);
+    }
 
-//    public void acceptCard(int Card){
-//        this.deckStack.add(Card);
-//    }
+    public void peekAtCard(){
+        System.out.println(discardDeck.peek());
+    }
 
-    public void peekAtDeck(){
-        System.out.println(deckStack.peek());
+    public void stripCard(PlayingCard x){
+        char suit = x.getSuit();
+        int value = x.getValue();
     }
 }

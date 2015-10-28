@@ -7,32 +7,41 @@ public class Main {
 
     public static void main(String[] args) {
 
+        DiscardDeck discardDeck = new DiscardDeck();
         DrawDeck mainDeck = new DrawDeck(); //These lines create a new deck
         mainDeck.createDeck();              //and shuffle it.
         mainDeck.shuffle();
 
-        HumanPlayer human = new HumanPlayer(); //These set up empty
-        CPU computer = new CPU();              //human and CPU players
+        ArrayList<PlayingCard> humanHand = mainDeck.dealToOne();
+        ArrayList<PlayingCard> computerHand = mainDeck.dealToTwo();
+        HumanPlayer human = new HumanPlayer(humanHand); //These set up empty
+        CPU computer = new CPU(computerHand);              //human and CPU players
         human.setScore(0);                     //with 0 score.
         computer.setScore(0);
 
-        System.out.println("Welcome to crazy 8s");
-        System.out.println("What is your name?");
-        Scanner s = new Scanner(System.in);
+        System.out.println("Welcome to crazy 8s");  //Intro sequence.
+        System.out.println("What is your name?");   //Create scanner, get
+        Scanner s = new Scanner(System.in);         //player name.
 
-        human.setName(s.nextLine());
-        computer.setName("CPU");
+        human.setName(s.nextLine());    //Set the player's name
+        computer.setName("CPU");        //Set the CPU's name as CPU
 
-        ArrayList<PlayingCard> humanHand = mainDeck.firstDeal();     //These lines give both
-        ArrayList<PlayingCard> computerHand = mainDeck.firstDeal();  //the player and the computer
-        human.setHand(humanHand);                                    //an arrayList of 7 cards.
-        computer.setHand(computerHand);                              //This is their hand.
-
-        System.out.println("Here is your hand:");
+        System.out.println("Here is your hand:"); //Show the player the cards in their hand
         System.out.println(human.getHand());
 
 
+        /* Any variables that are 'x' or similar
+         * are PURELY PLACEHOLDERS. They're there
+         * to see if I can run something. If it works
+         * I change them to something more useful.
+         */
 
+        PlayingCard x = mainDeck.popTop();
+        discardDeck.getCard(x);
+        System.out.println("Card up: ");
+        discardDeck.peekAtCard();
+
+        System.out.println("What would you like to play?");
 
 
 

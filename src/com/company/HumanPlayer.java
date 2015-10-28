@@ -3,6 +3,12 @@ package com.company;
 import java.util.ArrayList;
 
 public class HumanPlayer extends Player {
+
+    ArrayList<PlayingCard> hand = new ArrayList<>(7);
+
+    public HumanPlayer(ArrayList<PlayingCard> nand){
+        this.hand = nand;
+    }
     public int getScore() {
         return score;
     }
