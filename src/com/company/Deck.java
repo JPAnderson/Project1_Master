@@ -30,6 +30,11 @@ public abstract class Deck{
         System.out.println(card2.toString());
     }
 
+    public void pop(){
+        PlayingCard card2 = (deckStack.pop());
+        System.out.println(card2.toString());
+    }
+
     /*
     * Deck is shuffling! (probably)
     * the print method is NOT PRINTING
