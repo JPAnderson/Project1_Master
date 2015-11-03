@@ -26,22 +26,28 @@ public class Main {
         human.setName(s.nextLine());    //Set the player's name
         computer.setName("CPU");        //Set the CPU's name as CPU
 
-        System.out.println("Here is your hand:"); //Show the player the cards in their hand
-        System.out.println(human.getHand());
 
+        PlayingCard firstOff = mainDeck.popTop();
+        discardDeck.getCard(firstOff);
 
-        /* Any variables that are 'x' or similar
-         * are PURELY PLACEHOLDERS. They're there
-         * to see if I can run something. If it works
-         * I change them to something more useful.
-         */
+        boolean winner = (false);
+        while(winner == false) {
 
-        PlayingCard x = mainDeck.popTop();
-        discardDeck.getCard(x);
-        System.out.println("Card up: ");
-        discardDeck.peekAtCard();
+            System.out.println("Your hand:");
+            System.out.println(human.getHand() + "\n");
 
-        System.out.println("What would you like to play?");
+            System.out.println("Card up: ");
+            discardDeck.peekAtCard();
+            System.out.println("");
+
+            PlayingCard humanTurn = human.playCard();
+            discardDeck.stripCard(humanTurn, firstOff);
+            winner = human.checkHumanWinner();
+
+            //computer's turn
+            //back to top
+        }
+        System.out.println("We have a winner!");
 
 
 

@@ -24,7 +24,7 @@ public class DrawDeck extends Deck {
 
     public ArrayList dealToOne(){      // Pops 7 cards from the deck into
         for(int i = 0; i <= 6; i++){
-            System.out.println(deckStack.peek());
+           // System.out.println(deckStack.peek());
             forPlayerOne.add(deckStack.pop()); // to a player
         }
         return forPlayerOne;
@@ -32,7 +32,7 @@ public class DrawDeck extends Deck {
 
     public ArrayList dealToTwo(){
         for(int i = 0; i <= 6; i++){
-            System.out.println(deckStack.peek());
+            //System.out.println(deckStack.peek());
             forPlayerTwo.add(deckStack.pop()); // to a player
         }
         return forPlayerTwo;

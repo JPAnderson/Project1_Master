@@ -1,15 +1,15 @@
 package com.company;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class HumanPlayer extends Player {
-
+public class CPU extends Player {
     ArrayList<PlayingCard> hand = new ArrayList<>(7);
-    boolean winner;
 
-    public HumanPlayer(ArrayList<PlayingCard> nand){
+    public CPU(ArrayList<PlayingCard> nand){
         this.hand = nand;
     }
+
     public int getScore() {
         return score;
     }
@@ -34,20 +34,12 @@ public class HumanPlayer extends Player {
         this.hand = hand;
     }
 
-    public PlayingCard playCard(){
-        System.out.println("What card to play? ");
-        int cardToPull = scanner.nextInt();
-        PlayingCard pulledCard = this.hand.remove(cardToPull);
-        return pulledCard;
-    }
-
-    public boolean checkHumanWinner(){
-        if(this.hand.isEmpty()){
-            this.winner = true ;
-        }
-        else{
-            this.winner = false ;
-        }
-        return winner;
+    public void playHand(){
+        //Look at top card
+        //Play the same number
+        //if not, then play the same suit
+        //if not, then play an 8
+        //if not then draw a card
+        //end turn
     }
 }
