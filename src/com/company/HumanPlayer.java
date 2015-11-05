@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class HumanPlayer extends Player {
 
@@ -49,5 +50,14 @@ public class HumanPlayer extends Player {
             this.winner = false ;
         }
         return winner;
+    }
+
+    public PlayingCard fuckYou(PlayingCard card){
+        this.hand.add(0, card);
+        return this.hand.get(0);
+    }
+
+    public void remove(){
+        this.hand.remove(0);
     }
 }

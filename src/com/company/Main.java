@@ -7,6 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
 
+        PlayingCard newCard;
         DiscardDeck discardDeck = new DiscardDeck();
         DrawDeck mainDeck = new DrawDeck(); //These lines create a new deck
         mainDeck.createDeck();              //and shuffle it.
@@ -31,7 +32,7 @@ public class Main {
         discardDeck.getCard(firstOff);
 
         boolean winner = (false);
-        while(winner == false) {
+        while(!winner) {
 
             System.out.println("Your hand:");
             System.out.println(human.getHand() + "\n");
@@ -41,8 +42,21 @@ public class Main {
             System.out.println("");
 
             PlayingCard humanTurn = human.playCard();
-            discardDeck.stripCard(humanTurn, firstOff);
-            winner = human.checkHumanWinner();
+            PlayingCard cunt;
+            if(humanTurn.getValue() == 8){
+                System.out.println("pick a fucking suit");
+                String fuck = s.nextLine();
+                char fuckEveryone = discardDeck.switchSuit(fuck);
+                PlayingCard shit = new PlayingCard(8, fuckEveryone);
+                human.fuckYou(shit);
+                human.remove();
+                discardDeck.getCard(shit);
+                discardDeck.stripHumanCard(shit, firstOff);
+            }
+
+            discardDeck.stripHumanCard(humanTurn, firstOff);
+//            winner = human.checkHumanWinner();
+            firstOff = humanTurn;
 
             //computer's turn
             //back to top
