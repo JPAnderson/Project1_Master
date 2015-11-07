@@ -75,8 +75,10 @@ public class Main {
                 PlayingCard cardToAdd = mainDeck.collectCard();
                 System.out.println(cardToAdd.toString());
                 humanHand.add(cardToAdd);
-                break;
-            } else if (!noCards) {
+                //break;
+            }
+
+            else if (!noCards) {
                 humanTurn = human.playCard();
 
                 if (humanTurn.getValue() == 8) {
@@ -89,17 +91,25 @@ public class Main {
                     discardDeck.getCard(crazyEight);
                     discardDeck.stripHumanCard(crazyEight, firstOff);
                     firstOff = crazyEight;
-                } else {
+                }
+                else {
 
                     discardDeck.stripHumanCard(humanTurn, firstOff);
-                    //            winner = human.checkHumanWinner();
+
                     firstOff = humanTurn;
                     //break;
                 }
-            } else {
+            }
+
+            else {
                 System.out.println("CPU's turn");
             }
 
+            winner = human.checkHumanWinner();
+            if(winner){
+                System.out.println(human.getName() + " won!");
+                break;
+            }
             computer.setCardOnDiscard(firstOff);
 
             //computer's turn
@@ -129,6 +139,7 @@ public class Main {
             if (noCPUCards) {
                 computerHand.add(mainDeck.collectCard());
                 System.out.println("CPU had no cards. Drew one\n Player's turn");
+
             } else if (!noCPUCards) {
                 for (PlayingCard card : computerHand) {
                     if (card.getValue() == firstOff.getValue()) {
@@ -155,6 +166,11 @@ public class Main {
                         break;
                     }
                 }
+            }
+
+            winner = computer.checkCPUWinner();
+            if(winner){
+                System.out.println("CPU Won!");
             }
         }
     }

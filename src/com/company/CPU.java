@@ -8,6 +8,7 @@ public class CPU extends Player {
     ArrayList<PlayingCard> hand = new ArrayList<>(7);
     private PlayingCard cardOnDiscard;
     char out;
+    private boolean winner;
 
     public CPU(ArrayList<PlayingCard> nand){
         this.hand = nand;
@@ -60,6 +61,16 @@ public class CPU extends Player {
                 break;
         }
         return out;
+    }
+
+    public boolean checkCPUWinner(){
+        if(this.hand.isEmpty()){
+            this.winner = true ;
+        }
+        else{
+            this.winner = false ;
+        }
+        return winner;
     }
 
 
