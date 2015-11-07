@@ -34,22 +34,4 @@ public abstract class Deck{
         PlayingCard card2 = (deckStack.pop());
         System.out.println(card2.toString());
     }
-
-    /*
-    * Deck is shuffling! (probably)
-    * the print method is NOT PRINTING
-    * from the stack; it is unrelated.
-    * That's why it's 13-D every time.
-    *
-    * UPDATE
-    * Dumb hashcode problem again. No
-    * idea how to reference objects
-    * in the stack by their card name
-    *
-    * UPDATE
-    * Use the .toString method (somewhere)
-     */
-
-
-   
 }

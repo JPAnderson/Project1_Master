@@ -43,11 +43,12 @@ public class DrawDeck extends Deck {
 
         return sendCard;
     }
+    public PlayingCard collectCard(){
+        PlayingCard card = deckStack.pop();
+        return card;
+    }
 
 
-//    public void print(){
-//        System.out.println();
-//    }
 
 
 }

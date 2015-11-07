@@ -19,6 +19,10 @@ public class DiscardDeck {
         System.out.println(discardDeck.peek());
     }
 
+    public PlayingCard peek(){
+        return discardDeck.peek();
+    }
+
     public void stripHumanCard(PlayingCard cardPlayed, PlayingCard cardUp){
         char suit = cardPlayed.getSuit();
         int value = cardPlayed.getValue();
@@ -36,7 +40,7 @@ public class DiscardDeck {
             this.discardDeck.push(cardPlayed);
         }
         else{
-            System.out.println("That's an invalid card! FAGGOT!!!!!");
+            System.out.println("Error (or not a legal card)");
         }
     }
 

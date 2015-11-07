@@ -52,7 +52,7 @@ public class HumanPlayer extends Player {
         return winner;
     }
 
-    public PlayingCard fuckYou(PlayingCard card){
+    public PlayingCard scopeEvade(PlayingCard card){
         this.hand.add(0, card);
         return this.hand.get(0);
     }
