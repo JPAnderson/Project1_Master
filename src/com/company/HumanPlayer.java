@@ -1,12 +1,16 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class HumanPlayer extends Player {
 
     ArrayList<PlayingCard> hand = new ArrayList<>(7);
     boolean winner;
+    PlayingCard pulledCard;
+    boolean validEntry;
+    int index;
 
     public HumanPlayer(ArrayList<PlayingCard> nand){
         this.hand = nand;
@@ -27,6 +31,7 @@ public class HumanPlayer extends Player {
         this.name = name;
     }
 
+
     public ArrayList<PlayingCard> getHand() {
         return this.hand;
     }
@@ -36,10 +41,32 @@ public class HumanPlayer extends Player {
     }
 
     public PlayingCard playCard(){
-        System.out.println("What card to play? ");
-        int cardToPull = scanner.nextInt();
-        PlayingCard pulledCard = this.hand.remove(cardToPull);
+        validEntry = false;
+
+        while(!validEntry)
+            try {
+                System.out.println("What card to play? ");
+                int nerd = scanner.nextInt();
+                pulledCard = this.hand.get(nerd);
+                index = nerd;
+                validEntry = true;
+            }
+            catch(InputMismatchException ime){
+                System.out.println("Please enter the INDEX of the card you'd like to play (a number)");
+                scanner.next();
+            }
+            catch(ArrayIndexOutOfBoundsException obe){
+                System.out.println("That index doesn't exist, please pick another card");
+                scanner.next();
+            }
+            catch(IndexOutOfBoundsException iobe){
+                System.out.println("That index doesn't exist! please pick another card");
+                scanner.next();
+            }
         return pulledCard;
+    }
+    public int getIndex(){
+        return index;
     }
 
     public boolean checkHumanWinner(){
@@ -60,4 +87,10 @@ public class HumanPlayer extends Player {
     public void remove(){
         this.hand.remove(0);
     }
+
+    public void clearCard(int position){
+        this.hand.remove(position);
+    }
+
+
 }

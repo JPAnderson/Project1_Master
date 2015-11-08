@@ -12,6 +12,7 @@ public class Main {
         DrawDeck mainDeck = new DrawDeck(); //These lines create a new deck
         mainDeck.createDeck();              //and shuffle it.
         mainDeck.shuffle();
+        boolean goodToGo;
 
         ArrayList<PlayingCard> humanHand = mainDeck.dealToOne();
         ArrayList<PlayingCard> computerHand = mainDeck.dealToTwo();
@@ -19,6 +20,8 @@ public class Main {
         CPU computer = new CPU(computerHand);              //human and CPU players
         human.setScore(0);                     //with 0 score.
         computer.setScore(0);
+        int humanScoreCounter = 0;
+        int CPUScoreCounter = 0;
 
         System.out.println("Welcome to crazy 8s");  //Intro sequence.
         System.out.println("What is your name?");   //Create scanner, get
@@ -32,13 +35,14 @@ public class Main {
         discardDeck.getCard(firstOff);            //and hands it to the discard deck. This is the
         //first card up of the game.
         boolean winner = (false);
-        while (!winner) { //Keep playing as long as there's no winner
+        boolean playAgain = false;
+        while (!winner && !playAgain) { //Keep playing as long as there's no winner
 
-            System.out.println("Your hand:");           //Lines 37 - 41 show the player their hand and
+            System.out.println("Your hand: ");           //Lines 37 - 41 show the player their hand and
             System.out.println(human.getHand() + "\n"); //show the top card of the discard pile, which
-            System.out.println("Card up: ");            //is the card calculations are made from. As with
-            discardDeck.peekAtCard();                   //everything below the while loop, this code is
-            System.out.println("");                     //executed every turn.
+            System.out.println("Card up: " + discardDeck.peek());            //is the card calculations are made from. As with
+                                                        //everything below the while loop, this code is
+                                 //executed every turn.
 
             PlayingCard spyCard = discardDeck.peek();   //get the top card of the discard deck.
 
@@ -71,33 +75,44 @@ public class Main {
              * (lines  74 - 79)
              */
             if (noCards) {
-                System.out.println("No legal cards to play. Here's one:");
                 PlayingCard cardToAdd = mainDeck.collectCard();
-                System.out.println(cardToAdd.toString());
+                System.out.println("No legal cards to play. Here's one: " + cardToAdd.toString());
                 humanHand.add(cardToAdd);
-                //break;
             }
 
             else if (!noCards) {
-                humanTurn = human.playCard();
+                goodToGo = false;
+                while(!goodToGo) {
+                    humanTurn = human.playCard();
+                    int index = human.getIndex();
 
-                if (humanTurn.getValue() == 8) {
-                    System.out.println("Please pick a new suit for play");
-                    String suitChoice = s.nextLine();
-                    char suitChose = discardDeck.switchSuit(suitChoice);
+                    if (humanTurn.getValue() == 8) {
+                        System.out.println("Please pick a new suit for play");
+                        String suitChoice = s.nextLine();
+                        char suitChose = discardDeck.switchSuit(suitChoice);
 
-                    PlayingCard crazyEight = new PlayingCard(8, suitChose);
-                    human.remove();
-                    discardDeck.getCard(crazyEight);
-                    discardDeck.stripHumanCard(crazyEight, firstOff);
-                    firstOff = crazyEight;
-                }
-                else {
+                        PlayingCard crazyEight = new PlayingCard(8, suitChose);
+                        PlayingCard onceMore = human.scopeEvade(crazyEight);
+                        human.remove();
+                        discardDeck.getCard(onceMore);
+                        discardDeck.stripHumanCard(onceMore, firstOff);
+                        firstOff = onceMore;
+                        human.clearCard(index);
+                        System.out.println("You played " + firstOff.toString());
+                        goodToGo = true;
+                    } else {
 
-                    discardDeck.stripHumanCard(humanTurn, firstOff);
-
-                    firstOff = humanTurn;
-                    //break;
+                        boolean good = discardDeck.stripHumanCard(humanTurn, firstOff);
+                        if(good){
+                            human.clearCard(index);
+                            firstOff = humanTurn;
+                            System.out.println("You played " + firstOff.toString());
+                            goodToGo = true;
+                        }
+                        else{
+                            goodToGo = false;
+                        }
+                    }
                 }
             }
 
@@ -105,10 +120,32 @@ public class Main {
                 System.out.println("CPU's turn");
             }
 
-            winner = human.checkHumanWinner();
-            if(winner){
+            if(human.checkHumanWinner()){
                 System.out.println(human.getName() + " won!");
-                break;
+                CPUScoreCounter += 1;
+                computer.setScore(CPUScoreCounter);
+                System.out.println("CPU wins: " + computer.getScore());
+
+                System.out.println("Would you like to play again?");
+                Scanner scanner = new Scanner(System.in);
+                String playAgaim = scanner.nextLine().toLowerCase();
+                if(playAgaim.equals("yes")){
+                    winner = false;
+                    mainDeck = new DrawDeck();
+                    mainDeck.createDeck();
+                    mainDeck.shuffle();
+                    humanHand = mainDeck.dealToOne();
+                    computerHand = mainDeck.dealToTwo();
+                    discardDeck = new DiscardDeck();
+                    human = new HumanPlayer(humanHand);
+                    computer = new CPU((computerHand));
+                    firstOff = mainDeck.popTop();
+                    discardDeck.getCard(firstOff);
+                }else{
+                    winner = true;
+                }
+
+
             }
             computer.setCardOnDiscard(firstOff);
 
@@ -146,14 +183,14 @@ public class Main {
                         discardDeck.getCard(card);
                         computerHand.remove(card);
                         firstOff = card;
-                        System.out.println("computer played " + card.toString());
+                        System.out.println("CPU played " + card.toString() + "\n");
                         break;
 
                     } else if (card.getSuit() == firstOff.getSuit()) {
                         discardDeck.getCard(card);
                         computerHand.remove(card);
                         firstOff = card;
-                        System.out.println("CPU played " + card.toString());
+                        System.out.println("CPU played " + card.toString() + "\n");
                         break;
 
                     } else if (card.getValue() == 8) {
@@ -162,17 +199,41 @@ public class Main {
                         discardDeck.getCard(passCard);
                         computerHand.remove(card);
                         firstOff = passCard;
-                        System.out.println("CPU Played " + card.toString());
+                        System.out.println("CPU Played " + card.toString() + "\n");
                         break;
                     }
                 }
             }
 
-            winner = computer.checkCPUWinner();
-            if(winner){
+            if(computer.checkCPUWinner()){
                 System.out.println("CPU Won!");
+                CPUScoreCounter += 1;
+                computer.setScore(CPUScoreCounter);
+                System.out.println("CPU wins: " + computer.getScore());
+
+                System.out.println("Would you like to play again?");
+                Scanner scanner = new Scanner(System.in);
+                String playAgaim = scanner.nextLine().toLowerCase();
+                if(playAgaim.equals("yes")){
+                    winner = false;
+                    mainDeck = new DrawDeck();
+                    mainDeck.createDeck();
+                    mainDeck.shuffle();
+                    humanHand = mainDeck.dealToOne();
+                    computerHand = mainDeck.dealToTwo();
+                    discardDeck = new DiscardDeck();
+                    human = new HumanPlayer(humanHand);
+                    computer = new CPU((computerHand));
+                    firstOff = mainDeck.popTop();
+                    discardDeck.getCard(firstOff);
+
+                }else{
+                    winner = true;
+            }
+
             }
         }
+
     }
 } //E.O.F.
 //E.O.C

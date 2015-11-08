@@ -10,6 +10,7 @@ public class DiscardDeck {
     private char suit;
     private PlayingCard card;
     private char out;
+    boolean validCard;
 
     public void getCard(PlayingCard y){
         discardDeck.push(y);
@@ -23,26 +24,30 @@ public class DiscardDeck {
         return discardDeck.peek();
     }
 
-    public void stripHumanCard(PlayingCard cardPlayed, PlayingCard cardUp){
-        char suit = cardPlayed.getSuit();
-        int value = cardPlayed.getValue();
+    public boolean stripHumanCard(PlayingCard cardPlayed, PlayingCard cardUp){
+            char suit = cardPlayed.getSuit();
+            int value = cardPlayed.getValue();
 
-        char otherSuit = cardUp.getSuit();
-        int otherValue = cardUp.getValue();
+            char otherSuit = cardUp.getSuit();
+            int otherValue = cardUp.getValue();
 
-        if(cardPlayed.getValue() == 8){
-            this.discardDeck.push(cardPlayed);
+            if (cardPlayed.getValue() == 8) {
+                this.discardDeck.push(cardPlayed);
+                validCard = true;
+            } else if (value == otherValue) {
+                this.discardDeck.push(cardPlayed);
+                validCard = true;
+            } else if (suit == otherSuit) {
+                this.discardDeck.push(cardPlayed);
+                validCard = true;
+            } else {
+                System.out.println("Error (or not a legal card)");
+                validCard = false;
+            }
+        return validCard;
         }
-        else if(value == otherValue){
-            this.discardDeck.push(cardPlayed);
-        }
-        else if (suit == otherSuit){
-            this.discardDeck.push(cardPlayed);
-        }
-        else{
-            System.out.println("Error (or not a legal card)");
-        }
-    }
+
+
 
     public void stripCPUCard(PlayingCard cardPlayed, PlayingCard cardUp){
         char suit = cardPlayed.getSuit();
@@ -82,6 +87,8 @@ public class DiscardDeck {
         }
         return out;
     }
+
+
 
 
 }
