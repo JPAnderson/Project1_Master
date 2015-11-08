@@ -1,21 +1,17 @@
 package com.company;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class CPU extends Player {
-    ArrayList<PlayingCard> hand = new ArrayList<>(7);
-    private PlayingCard cardOnDiscard;
-    char out;
+    private ArrayList<PlayingCard> hand = new ArrayList<>(7);
+    private char out;
     private boolean winner;
+    private PlayingCard cardOnDiscard;
 
-    public CPU(ArrayList<PlayingCard> nand){
+    //constructor
+    public CPU(ArrayList<PlayingCard> nand){ //Initialize the CPU with the hand dealt to it
         this.hand = nand;
-    }
-
-    public void setCardOnDiscard(PlayingCard cardOnDiscard) {
-        this.cardOnDiscard = cardOnDiscard;
     }
 
     public int getScore() {
@@ -26,25 +22,15 @@ public class CPU extends Player {
         this.score = score;
     }
 
-    public String getName() {
-        return name;
+    public void setCardOnDiscard(PlayingCard cardOnDiscard) {
+        this.cardOnDiscard = cardOnDiscard;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ArrayList<PlayingCard> getHand() {
-        return this.hand;
-    }
-
-    public PlayingCard playCPUCard(PlayingCard cardII) {
-        System.out.println("What card to play? ");
-        int cardToPull = scanner.nextInt();
-        cardII = this.hand.remove(cardToPull);
-        return cardII;
-    }
-
+    /*
+     * This method picks a suit when the CPU plays an 8.
+     * It is completely random. A random int between 0 and 3 is picked,
+     * and depending on what it is, the suit is picked and returned
+     */
     public char suitPicker(){
         Random rand = new Random();
         int randomNumber = rand.nextInt(3);
@@ -63,7 +49,7 @@ public class CPU extends Player {
         return out;
     }
 
-    public boolean checkCPUWinner(){
+    public boolean checkCPUWinner(){ //If the CPUs hand is empty, the CPU is the winner
         if(this.hand.isEmpty()){
             this.winner = true ;
         }
@@ -72,9 +58,11 @@ public class CPU extends Player {
         }
         return winner;
     }
-
-
-
-
-
 }
+
+/*
+ * There's a discrepancy when the CPU picks an 8. It says the CPU
+ * played an 8 of x, which it DID, but the card up will be the 8 of y.
+ * This is not a bug. It happens because the computer assigns the new
+ * suit AFTER it plays the card.
+ */

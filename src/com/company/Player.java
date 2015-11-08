@@ -1,7 +1,10 @@
 package com.company;
 
+/*
+ * This abstract class is what the players are built on.
+ * Any player has a score and a name.
+ */
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class Player {

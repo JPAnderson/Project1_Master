@@ -5,10 +5,8 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class DiscardDeck {
+
     protected Stack<PlayingCard> discardDeck = new Stack<>();
-    private boolean playEight = false;
-    private char suit;
-    private PlayingCard card;
     private char out;
     boolean validCard;
 
@@ -16,14 +14,17 @@ public class DiscardDeck {
         discardDeck.push(y);
     }
 
-    public void peekAtCard(){
-        System.out.println(discardDeck.peek());
-    }
-
     public PlayingCard peek(){
         return discardDeck.peek();
     }
 
+
+    /*
+     * This method takes the card the human played, and the face up card, and
+     * strips the cards to their values and their suits. It then compares if any
+     * are equivalent, and if yes, passed true back to main. If not, it displays as such,
+     * and the data validation is handled in main
+     */
     public boolean stripHumanCard(PlayingCard cardPlayed, PlayingCard cardUp){
             char suit = cardPlayed.getSuit();
             int value = cardPlayed.getValue();
@@ -41,35 +42,17 @@ public class DiscardDeck {
                 this.discardDeck.push(cardPlayed);
                 validCard = true;
             } else {
-                System.out.println("Error (or not a legal card)");
+                System.out.println("Not a legal card!");
                 validCard = false;
             }
         return validCard;
         }
 
-
-
-    public void stripCPUCard(PlayingCard cardPlayed, PlayingCard cardUp){
-        char suit = cardPlayed.getSuit();
-        int value = cardPlayed.getValue();
-
-        char otherSuit = cardUp.getSuit();
-        int otherValue = cardUp.getValue();
-
-        if(value == 8){
-
-        }
-        else if(value == otherValue){
-            this.discardDeck.push(cardPlayed);
-        }
-        else if(suit == otherSuit){
-            this.discardDeck.push(cardPlayed);
-        }
-        else {
-            System.out.println("That is not a legal card!");
-        }
-    }
-
+    /*
+  * This method accepts a string that was passed in by the player
+  * with the name of the suit they want. That's then put in a switch statement
+  * that determines the correct suit.
+  */
     public char switchSuit(String suit){
         String suitToLower = suit.toLowerCase();
         switch(suitToLower){
